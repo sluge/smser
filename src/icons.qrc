@@ -1,0 +1,8 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+     <file>img/uparrow.png</file>
+     <file>img/downarrow.png</file>
+     <file>img/refresh.png</file>
+     <file>img/heart.svg</file>
+</qresource>
+</RCC>
