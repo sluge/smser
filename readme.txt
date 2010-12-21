@@ -9,5 +9,6 @@ Build:
    Go to smser directory and type "qmake;make" without "
    
 Run:
-  Go to smser/src and type "./smser" without "
+  on linux:
+  Go to "smser/src" and type "./smser" without "
   

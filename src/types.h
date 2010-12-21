@@ -27,9 +27,9 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include <QtCore>
-
-#ifndef _TYPES_H_
-#define _TYPES_H_
+//WARNING! do not use _TYPES_H_ here! this is already used in windows mingw32
+#ifndef _SMSERTYPES_H_
+#define _SMSERTYPES_H_
 
 typedef const QString CQString;
 
@@ -42,4 +42,4 @@ typedef const uint cuint;
 typedef const int cint;
 
 
-#endif //_TYPES_H_
+#endif //_SMSERTYPES_H_
