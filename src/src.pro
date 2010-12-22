@@ -28,3 +28,10 @@ UI_DIR = .ui
 MOC_DIR = .moc
 OBJECTS_DIR = .obj
 RCC_DIR = .rc
+
+#windows icon and file info
+win32:
+{ 
+    RC_FILE = smser.rc 
+    QMAKE_LFLAGS *= -static-libgcc
+}
