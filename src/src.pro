@@ -9,14 +9,16 @@ CONFIG += debug warn_on
 
 SOURCES += main.cpp \
     mainwidget.cpp \
-    utils.cpp
+    utils.cpp \
+    logger.cpp
 
 HEADERS += \
     mainwidget.h \
     defines.h \
     types.h \
     config.h \
-    utils.h
+    utils.h \
+    logger.h
 
 FORMS += \
     mainwidget.ui
