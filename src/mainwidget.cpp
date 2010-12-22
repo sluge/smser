@@ -28,7 +28,6 @@
 
 #include <QMessageBox>
 #include <QDomDocument>
-//#include <QFile>
 #include <QMenu>
 #include "utils.h"
 #include "defines.h"
@@ -56,7 +55,7 @@ MainWidget::MainWidget() : m_maxMsgLen(maxDefMsgLen),
 
     setupUi(this);
 
-    setWindowIcon(QIcon(":/img/heart.svg"));
+    setWindowIcon(QIcon(":/img/heart2.png"));
 
     m_numberLE = numberCB->lineEdit();
 //    if(!m_numberLE)
@@ -560,7 +559,7 @@ void MainWidget::createTrayIcon()
     CONN(m_trayIcon, activated(QSystemTrayIcon::ActivationReason),
             iconActivated(QSystemTrayIcon::ActivationReason));
 
-    m_trayIcon->setIcon(QIcon(":/img/heart.svg"));
+    m_trayIcon->setIcon(QIcon(":/img/heart2.png"));
     m_trayIcon->setToolTip(programmName);
     m_trayIcon->show();
 }
