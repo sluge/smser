@@ -29,11 +29,21 @@
 
 #include <QApplication>
 #include "mainwidget.h"
+#include "logger.h"
+#include "config.h"
+
+using namespace config;
 
 int main(int argc, char *argv[])
 {
-    //TODO:
     QApplication a(argc, argv);
+
+    if(2 == argc)
+        LOGGER.setLevel(argv[1]);
+
+    LOGGER<<eDebug<<"*********************************************"<<NL;
+    LOGGERD<<programmName
+           <<"Programm running, found argument "<<argv[1]<<NL;
 
     MainWidget mw;
     mw.show();
