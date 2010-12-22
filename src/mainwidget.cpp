@@ -32,6 +32,7 @@
 #include "utils.h"
 #include "defines.h"
 #include "config.h"
+#include "logger.h"
 #include "mainwidget.h"
 
 using namespace config;
@@ -50,6 +51,7 @@ MainWidget::MainWidget() : m_maxMsgLen(maxDefMsgLen),
     m_downArrow(":/img/downarrow.png"), m_trayIcon(0),
     m_hideAct(0), m_showAct(0)
 {
+    LOGGERD<<eDebug<<"MainWidget created"<<NL;
     //random initialization
     srand();
 
@@ -58,8 +60,7 @@ MainWidget::MainWidget() : m_maxMsgLen(maxDefMsgLen),
     setWindowIcon(QIcon(":/img/heart2.png"));
 
     m_numberLE = numberCB->lineEdit();
-//    if(!m_numberLE)
-//        abort();
+    Q_CHECK_PTR(m_numberLE);
     //TODO
 //    m_numberLE->setInputMask("99999999999999");
     m_numberLE->setMaxLength(numderDefLen);
@@ -91,11 +92,13 @@ MainWidget::MainWidget() : m_maxMsgLen(maxDefMsgLen),
 
 MainWidget::~MainWidget()
 {
+    LOGGERD<<eDebug<<"MainWidget destroyed"<<NL;
     save();
 }
 
 void MainWidget::getRoot()
 {
+    LOGGERD<<eDebug<<"http get / dir"<<NL;
     m_codeReq = m_http.get("/");
 }
 
@@ -129,11 +132,16 @@ QHttpRequestHeader MainWidget::createHeader(CQString &method, CQString &path) co
 void MainWidget::httpRequestFinished(int id, bool error)
 {
     if(error)
+    {
         statusTL->setText(m_http.errorString());
+        LOGGERD<<eDebug<<"httpRequestFinished, http error:"<<m_http.errorString()<<NL;
+    }
 
     addDownBytes(m_http.bytesAvailable());
     //stop the progress bar
     setProgressValue(1, 1);
+
+    LOGGERD<<eDebug<<"httpRequestFinished, current id:"<<id<<NL;
 
     if(id == m_codeReq)
     {
@@ -156,7 +164,7 @@ void MainWidget::httpRequestFinished(int id, bool error)
 
 void MainWidget::processXML()
 {
-    QByteArray data(m_http.readAll());
+    CQByteArray data(m_http.readAll());
     if(!data.isEmpty())
     {
         QDomDocument doc;
@@ -247,7 +255,10 @@ void MainWidget::processXML()
 
             m_captchaDisabled = captcha.isNull();
             if(!m_captchaDisabled)
+            {
+                LOGGERD<<eDebug<<"processXML(), get captcha:"<<captcha<<NL;
                 m_captchaReq = m_http.request(createHeader("GET", captcha));
+            }
         }
         else
             operatorTL->setText(trUtf8("Неизвестный оператор"));
@@ -262,20 +273,12 @@ void MainWidget::processCapture()
     captchaTL->setPixmap(QPixmap::fromImage(im));
     enableCaptchaInputs(true);
     setsubmit();
+    LOGGERD<<eDebug<<"processCapture(), captcha size:"<<im.size()<<NL;
 }
 
 bool MainWidget::getCode()
 {
-
-    CQByteArray data = m_http.readAll();
-
-    QFile f("resp.htm");
-    if(f.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QTextStream out(&f);
-        out << data;
-    }
-
+    CQByteArray data(m_http.readAll());
     if(m_lookForSend)
     {
         int start = data.indexOf(sent1);
@@ -299,13 +302,13 @@ bool MainWidget::getCode()
         if(-1 != end)
         {
             m_code = data.mid(start, end - start).toLong(&noError);
-//            statusTL->setText(QString("code=%1").arg(NUM(m_code)));
+            LOGGERD<<eDebug<<"getCode(), code:"<<m_code<<NL;
         }
     }
 
     if(!noError)
     {
-        qDebug()<<"Get root Error";
+        LOGGERD<<eDebug<<"getCode(), get code error"<<NL;
         getRoot();
     }
 
@@ -314,7 +317,6 @@ bool MainWidget::getCode()
 
 void MainWidget::onHttpReadyRead(const QHttpResponseHeader& rh)
 {
-//    qDebug()<<rh.toString();
     //coockie update
     if(m_cookies.isEmpty())
     {
@@ -355,7 +357,6 @@ void MainWidget::processNumber()
 
 void MainWidget::onHttpDataReadProgress(int done, int total)
 {
-    qDebug()<<"onHttpDataReadProgress done:"<<done<<" total:"<<total;
     setProgressValue(done, total);
     directionTL->setPixmap(m_downArrow);
 }
@@ -376,7 +377,6 @@ void MainWidget::requestOperator()
 {
     m_operatorReq = m_http.request(createHeader("GET",
         QString("/netxml.php?number=%1&rnd=%2").arg(m_numberLE->text()).arg(smsRand())));
-//    qDebug()<<"m_operatorReq:"<<m_operatorReq;
     captchaTL->setText(trUtf8("загрузка..."));
 }
 
@@ -433,6 +433,8 @@ void MainWidget::on_sendPB_clicked()
                 "&sign=" + QUrl::toPercentEncoding(signatureCB->currentText()) +
                  QString("&event=%1&codemod=code%2&code%2=%3").arg(m_event).arg(m_code).
                  arg(captchaLE->text());
+
+    LOGGERD<<eDebug<<"on_sendPB_clicked, code:"<<m_code<<", event:"<<m_event<<NL;
 
     post.setContentType(formUrl);
 
@@ -548,8 +550,11 @@ void MainWidget::createTrayIcon()
         return;
 
     QMenu* tiMenu = new QMenu(this);
+
     m_hideAct = tiMenu->addAction(trUtf8("Свернуть"), this, SLOT(hide()));
+    Q_CHECK_PTR(m_hideAct);
     m_showAct = tiMenu->addAction(trUtf8("Восстановить"), this, SLOT(showNormal()));
+    Q_CHECK_PTR(m_hideAct);
     tiMenu->addSeparator();
     tiMenu->addAction(trUtf8("Выход"), qApp, SLOT(quit()));
 
@@ -566,10 +571,6 @@ void MainWidget::createTrayIcon()
 
 void MainWidget::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    //just for safety
-    if(!m_trayIcon)
-        return;
-
     switch(reason)
     {
         case QSystemTrayIcon::MiddleClick:
@@ -578,13 +579,11 @@ void MainWidget::iconActivated(QSystemTrayIcon::ActivationReason reason)
             showNormal();
         break;
         case QSystemTrayIcon::Context:
-        {
             if(m_hideAct && m_showAct)
             {
                 m_hideAct->setEnabled(isVisible());
                 m_showAct->setEnabled(!isVisible());
             }
-        }
         break;
         default:;
     }
