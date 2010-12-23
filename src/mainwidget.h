@@ -64,7 +64,7 @@ private slots:
 
     void on_refreshCaptchaPB_clicked();
     //all requests are finished
-    void onHttpDone();
+    void onHttpDone(bool b);
 
     void httpRequestFinished(int id, bool error);
     //it is something to read
@@ -111,6 +111,8 @@ private:
     void load();
 
     void getRoot();
+
+    void httpError(const bool& b);
 
     void createTrayIcon();
     //maximum sms length for current operator

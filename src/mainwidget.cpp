@@ -74,7 +74,7 @@ MainWidget::MainWidget() : m_maxMsgLen(maxDefMsgLen),
 
     CONN(&m_http, dataSendProgress(int, int), onHttpDataSendProgress(int, int));
 
-    CONN(&m_http, done(bool), onHttpDone());
+    CONN(&m_http, done(bool), onHttpDone(bool));
 
     addUpBytes(0);
     addDownBytes(0);
@@ -131,11 +131,7 @@ QHttpRequestHeader MainWidget::createHeader(CQString &method, CQString &path) co
 
 void MainWidget::httpRequestFinished(int id, bool error)
 {
-    if(error)
-    {
-        statusTL->setText(m_http.errorString());
-        LOGGERD<<eDebug<<"httpRequestFinished, http error:"<<m_http.errorString()<<NL;
-    }
+    httpError(error);
 
     addDownBytes(m_http.bytesAvailable());
     //stop the progress bar
@@ -159,6 +155,15 @@ void MainWidget::httpRequestFinished(int id, bool error)
     {
         processCapture();
         m_captchaReq = 0;
+    }
+}
+
+void MainWidget::httpError(const bool& error)
+{
+    if(error)
+    {
+        statusTL->setText(trUtf8("Ошибка связи с сервером"));
+        LOGGERD<<eError<<"httpRequestFinished, http error:"<<m_http.errorString()<<NL;
     }
 }
 
@@ -308,7 +313,8 @@ bool MainWidget::getCode()
 
     if(!noError)
     {
-        LOGGERD<<eDebug<<"getCode(), get code error"<<NL;
+        LOGGERD<<eDebug<<"getCode(), get code error!"<<NL;
+        statusTL->setText(trUtf8("Возможно сообщение не было отослано"));
         getRoot();
     }
 
@@ -392,8 +398,9 @@ void MainWidget::addDownBytes(cuint& n)
     downTL->setText(bytesToText(m_downBytes));
 }
 
-void MainWidget::onHttpDone()
+void MainWidget::onHttpDone(bool b)
 {
+    httpError(b);
     directionTL->setPixmap(QPixmap());
 }
 
@@ -530,18 +537,18 @@ void MainWidget::setsubmit()
 
 void MainWidget::save()
 {
-    QSettings conf(programmAuthor, programmName);
+    QSettings conf(programmAuthorEn, programmName);
 
-    conf.setValue(confNumbers, combo2StringList(numberCB));
-    conf.setValue(confSignatures, combo2StringList(signatureCB));
+    conf.setValue(confNumbers, clearList(combo2StringList(numberCB)));
+    conf.setValue(confSignatures, clearList(combo2StringList(signatureCB)));
 }
 
 void MainWidget::load()
 {
-    QSettings conf(programmAuthor, programmName);
+    QSettings conf(programmAuthorEn, programmName);
 
-    fillCombo(numberCB, conf.value(confNumbers).toStringList());
-    fillCombo(signatureCB, conf.value(confSignatures).toStringList());
+    fillCombo(numberCB, clearList(conf.value(confNumbers).toStringList()));
+    fillCombo(signatureCB, clearList(conf.value(confSignatures).toStringList()));
 }
 
 void MainWidget::createTrayIcon()

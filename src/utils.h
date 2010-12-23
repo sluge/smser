@@ -44,5 +44,7 @@ QString bytesToText(cuint& n);
 QStringList combo2StringList(QComboBox* cb);
 
 void fillCombo(QComboBox* cb, CQStringList& s);
+//remove empty items from string list
+CQStringList clearList(CQStringList& s);
 
 #endif // UTILS_H
