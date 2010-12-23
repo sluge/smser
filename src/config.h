@@ -35,7 +35,9 @@ namespace config
 {
 CQString programmName = "smser";
 
-CQString programmAuthor = "Igor Sobinov";
+CQString programmAuthor = QObject::trUtf8("Игорь Собинов");
+
+CQString programmAuthorEn = "Igor Sobinov";
 
 CQString programmVersion = "0.1 beta";
 

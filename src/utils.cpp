@@ -81,3 +81,15 @@ void fillCombo(QComboBox* cb, CQStringList& s)
     for(uint i = 0; i < c; ++i)
         cb->addItem(s[i]);
 }
+
+CQStringList clearList(CQStringList& s)
+{
+    QStringList res;
+    cuint c = s.size();
+    for(uint i = 0; i < c; ++i)
+        if(!s[i].isEmpty())
+            res << s[i];
+
+    res.removeDuplicates();
+    return res;
+}
