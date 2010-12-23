@@ -1,5 +1,5 @@
 
-QT += core gui network xml
+QT += network xml
 
 TARGET = smser
 
