@@ -37,11 +37,15 @@
 #define CONN(sender, signal, slot) CONNECT(sender, signal, this, slot)
 
 
+#ifdef QT_NO_DEBUG
+#define CONNECT(sender, signal, receiver, slot) QObject::connect(\
+                                         sender, SIGNAL(signal), receiver, SLOT(slot));
+#else
 #define CONNECT(sender, signal, receiver, slot) { const bool b = QObject::connect(\
                                          sender, SIGNAL(signal), receiver, SLOT(slot));\
                                          Q_ASSERT(b); \
                                        }
-
+#endif
 #define CUR_DATE QDateTime::currentDateTime()
 
 #endif //_DEFINES_H_
