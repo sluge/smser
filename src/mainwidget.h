@@ -50,7 +50,7 @@ protected:
 
     virtual void closeEvent(QCloseEvent *event);
 
-private slots:
+private Q_SLOTS:
 
     void on_numberCB_editTextChanged();
 
