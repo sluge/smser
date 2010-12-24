@@ -79,7 +79,10 @@ MainWidget::MainWidget() : m_maxMsgLen(maxDefMsgLen),
     addUpBytes(0);
     addDownBytes(0);
 
-    authorTL->setText(programmName + " v." + programmVersion + " by " + programmAuthor);
+    authorTL->setText(programmName + " v." + programmVersion + " by " +
+        programmAuthor);
+
+    webSiteTL->setText(programmWebSite);
 
     m_http.setHost(messageSite);
     getRoot();
@@ -538,9 +541,11 @@ void MainWidget::setsubmit()
 void MainWidget::save()
 {
     QSettings conf(programmAuthorEn, programmName);
-
-    conf.setValue(confNumbers, clearList(combo2StringList(numberCB)));
-    conf.setValue(confSignatures, clearList(combo2StringList(signatureCB)));
+    QStringList l;
+    conf.setValue(confNumbers, l = clearList(combo2StringList(numberCB)));
+    conf.setValue(confLastNumber, l.indexOf(m_numberLE->text()));
+    conf.setValue(confSignatures,  l = clearList(combo2StringList(signatureCB)));
+    conf.setValue(confLastSign, l.indexOf(signatureCB->currentText()));
 }
 
 void MainWidget::load()
@@ -549,6 +554,14 @@ void MainWidget::load()
 
     fillCombo(numberCB, clearList(conf.value(confNumbers).toStringList()));
     fillCombo(signatureCB, clearList(conf.value(confSignatures).toStringList()));
+    bool res = false;
+    int c = conf.value(confLastNumber).toInt(&res);
+    if(res)
+        numberCB->setCurrentIndex(c);
+
+    c = conf.value(confLastSign).toInt(&res);
+    if(res)
+        signatureCB->setCurrentIndex(c);
 }
 
 void MainWidget::createTrayIcon()
@@ -583,6 +596,9 @@ void MainWidget::iconActivated(QSystemTrayIcon::ActivationReason reason)
         case QSystemTrayIcon::MiddleClick:
         case QSystemTrayIcon::Trigger:
         case QSystemTrayIcon::DoubleClick:
+        if(isVisible())
+            hide();
+        else
             showNormal();
         break;
         case QSystemTrayIcon::Context:
