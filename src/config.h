@@ -39,6 +39,8 @@ CQString programmAuthor = QObject::trUtf8("Игорь Собинов");
 
 CQString programmAuthorEn = "Igor Sobinov";
 
+CQString programmWebSite = "<A href=http://smser-ru.narod.ru>smser-ru.narod.ru</A>";
+
 CQString programmVersion = "0.1 beta";
 
 CQString messageSite = "smste.ru";
@@ -107,7 +109,11 @@ CQString xmlEncoding = "encoding=";
 
 CQString confNumbers = "numbers";
 
+CQString confLastNumber = "lastnum";
+
 CQString confSignatures = "signatures";
+
+CQString confLastSign = "lastsign";
 
 }
 
