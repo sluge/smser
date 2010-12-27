@@ -31,6 +31,11 @@ MOC_DIR = .moc
 OBJECTS_DIR = .obj
 RCC_DIR = .rc
 
+#turn on extra g++ warninngs
+QMAKE_CXXFLAGS += -Wold-style-cast -Woverloaded-virtual -Wsign-promo
+#huge list of warnings are come from Qt
+#QMAKE_CXXFLAGS += -Weffc++ 
+
 #windows icon and file info
 win32:
 { 
