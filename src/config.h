@@ -73,7 +73,7 @@ CQString extra1 = "ёЁжЖчЧшШюЮяЯєЄ";
 
 CQString extra2 = "щЩ";
 
-cuint phoneMinLen = 9;
+cint phoneMinLen = 9;
 
 cuint numderDefLen = 11;
 

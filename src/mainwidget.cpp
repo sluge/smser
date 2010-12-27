@@ -134,11 +134,16 @@ QHttpRequestHeader MainWidget::createHeader(CQString &method, CQString &path) co
 
 void MainWidget::httpRequestFinished(int id, bool error)
 {
-    httpError(error);
+    if(error)
+    {
+        httpError(error);
+        return;
+    }
 
-    addDownBytes(m_http.bytesAvailable());
+    const qint64 b = m_http.bytesAvailable();
+    addDownBytes(b);
     //stop the progress bar
-    setProgressValue(1, 1);
+    setProgressValue(b, b);
 
     LOGGERD<<eDebug<<"httpRequestFinished, current id:"<<id<<NL;
 
@@ -166,6 +171,11 @@ void MainWidget::httpError(const bool& error)
     if(error)
     {
         statusTL->setText(trUtf8("Ошибка связи с сервером"));
+        //set progress to 0
+        setProgressValue(0, 1);
+        //WARNING:possible Qt bug
+        progressBar->update();
+
         LOGGERD<<eError<<"httpRequestFinished, http error:"<<m_http.errorString()<<NL;
     }
 }
@@ -346,7 +356,7 @@ void MainWidget::onHttpReadyRead(const QHttpResponseHeader& rh)
 void MainWidget::processNumber()
 {
     CQString num = m_numberLE->text();
-    if((uint)num.size() >= phoneMinLen)
+    if(num.size() >= phoneMinLen)
     {
         if(num.left(phoneMinLen) != m_lastReqNum)
         {
@@ -438,7 +448,7 @@ void MainWidget::on_sendPB_clicked()
 {
     QHttpRequestHeader post = createHeader("POST", "/");
 
-    QString s = QString("number=%1&message=").arg(m_numberLE->text()) +
+    CQString s = QString("number=%1&message=").arg(m_numberLE->text()) +
                 QUrl::toPercentEncoding(messageTE->toPlainText()) +
                 "&sign=" + QUrl::toPercentEncoding(signatureCB->currentText()) +
                  QString("&event=%1&codemod=code%2&code%2=%3").arg(m_event).arg(m_code).
@@ -534,7 +544,7 @@ void MainWidget::smslen()
 void MainWidget::setsubmit()
 {
     sendPB->setEnabled(!m_textTooLong && messageTE->toPlainText().size() &&
-        (uint)numberCB->currentText().size() ==  m_numberLen &&
+        numberCB->currentText().size() ==  m_numberLen &&
         (m_captchaDisabled || !captchaLE->text().isEmpty()));
 }
 

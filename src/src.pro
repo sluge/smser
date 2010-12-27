@@ -33,6 +33,11 @@ release:OBJECTS_DIR = .obj/release
 debug:OBJECTS_DIR = .obj/debug
 RCC_DIR = .rc
 
+#turn on extra g++ warninngs
+QMAKE_CXXFLAGS += -Wold-style-cast -Woverloaded-virtual -Wsign-promo
+#huge list of warnings are come from Qt
+#QMAKE_CXXFLAGS += -Weffc++ 
+
 #windows icon and file info
 win32:
 { 
