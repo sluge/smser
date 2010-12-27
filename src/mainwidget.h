@@ -118,7 +118,7 @@ private:
     //maximum sms length for current operator
     uint m_maxMsgLen;
     //number's lenght of current operator
-    uint m_numberLen;
+    int m_numberLen;
     //is message text is too long or not
     bool m_textTooLong;
     //is operator determeted or not
