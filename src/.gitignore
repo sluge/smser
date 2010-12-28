@@ -8,3 +8,7 @@
 
 smser
 smser.txt
+Makefile
+Makefile.Debug
+Makefile.Release
+../Makefile
