@@ -24,7 +24,7 @@
     <rect>
      <x>40</x>
      <y>10</y>
-     <width>191</width>
+     <width>201</width>
      <height>20</height>
     </rect>
    </property>
@@ -36,7 +36,11 @@ p, li { white-space: pre-wrap; }
 &lt;table border=&quot;0&quot; style=&quot;-qt-table-type: root; margin-top:4px; margin-bottom:4px; margin-left:4px; margin-right:4px;&quot;&gt;
 &lt;tr&gt;
 &lt;td style=&quot;border: none;&quot;&gt;
+<<<<<<< HEAD
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:12pt; font-weight:600;&quot;&gt;SMSER &lt;/span&gt;&lt;span style=&quot; font-family:'Sans Serif'; font-size:12pt;&quot;&gt;отправка смс&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</string>
+=======
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;smser &lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;отправка смс&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</string>
+>>>>>>> c23ad9c57ecd312bf6236673e5b7cf3fcfc0e1e5
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -391,14 +395,17 @@ p, li { white-space: pre-wrap; }
   <widget class="QLabel" name="webSiteTL">
    <property name="geometry">
     <rect>
-     <x>70</x>
+     <x>20</x>
      <y>420</y>
-     <width>91</width>
+     <width>191</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
    <property name="openExternalLinks">
     <bool>true</bool>

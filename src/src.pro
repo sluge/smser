@@ -26,9 +26,11 @@ FORMS += \
 RESOURCES += \
     icons.qrc
 
+
 UI_DIR = .ui
 MOC_DIR = .moc
-OBJECTS_DIR = .obj
+release:OBJECTS_DIR = .obj/release
+debug:OBJECTS_DIR = .obj/debug
 RCC_DIR = .rc
 
 #turn on extra g++ warninngs
