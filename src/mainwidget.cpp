@@ -300,9 +300,15 @@ bool MainWidget::getCode()
     if(m_lookForSend)
     {
         int start = data.indexOf(sent1);
+        int al = sent1.size();
+        if(-1 == start)
+        {
+            start = data.indexOf(notsent);
+            al = notsent.size();
+        }
         if(-1 != start)
         {
-            start += sent1.size();
+            start += al;
             cint end = data.indexOf(sent2, start);
             if(-1 != end)
             {
