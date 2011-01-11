@@ -33,7 +33,7 @@
 
 namespace config
 {
-CQString programmName = "smser";
+CQString programmName = "SMSER";
 
 CQString programmAuthor = QObject::trUtf8("Игорь Собинов");
 
