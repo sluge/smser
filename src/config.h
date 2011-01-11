@@ -63,6 +63,8 @@ CQString sent1 = "\"sentok\">";
 
 CQString sent2 = "</";
 
+CQString notsent = "\"notsent\">";
+
 CQString contentType = "Content-Type";
 
 CQString setCookie = "Set-Cookie";
