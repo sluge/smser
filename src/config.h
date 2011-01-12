@@ -41,7 +41,7 @@ CQString programmAuthorEn = "Igor Sobinov";
 
 CQString programmWebSite = "<A href=http://smser-ru.narod.ru>smser-ru.narod.ru</A>";
 
-CQString programmVersion = "0.1 beta";
+CQString programmVersion = "0.2 beta";
 
 CQString messageSite = "smste.ru";
 
