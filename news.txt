@@ -1,0 +1,4 @@
+
+********************************************************************
+   version 0.1 beta 2
+   + Added ability to show if message wasn't sended
