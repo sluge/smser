@@ -103,6 +103,7 @@ void MainWidget::getRoot()
 {
     LOGGERD<<eDebug<<"http get / dir"<<NL;
     m_codeReq = m_http.get("/");
+    statusTL->setText(trUtf8("Установка соединения..."));
 }
 
 QHttpRequestHeader MainWidget::createHeader(CQString &method, CQString &path) const
@@ -141,9 +142,15 @@ void MainWidget::httpRequestFinished(int id, bool error)
     }
 
     const qint64 b = m_http.bytesAvailable();
-    addDownBytes(b);
+
     //stop the progress bar
     setProgressValue(b, b);
+    if(!b)
+        return;
+
+    statusTL->setText(SNULL);
+
+    addDownBytes(b);
 
     LOGGERD<<eDebug<<"httpRequestFinished, current id:"<<id<<NL;
 
