@@ -1,4 +1,11 @@
 
+   This is news from version to version of SMSER
+   
+   Legend:
+    + New feature added
+    * Fixed
+    
 ********************************************************************
    version 0.1 beta 2
    + Added ability to show if message wasn't sended
+   * Fixed incorrect progress bar behavior if comes http response with zero byte payload
