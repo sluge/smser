@@ -26,9 +26,6 @@
 //    Description:   
 //////////////////////////////////////////////////////////////////////////
 
-#include <QMessageBox>
-#include <QDomDocument>
-#include <QMenu>
 #include "utils.h"
 #include "defines.h"
 #include "config.h"

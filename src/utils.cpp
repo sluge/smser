@@ -26,8 +26,6 @@
 //    Description:
 //////////////////////////////////////////////////////////////////////////
 
-#include <QDateTime>
-#include <QComboBox>
 #include "config.h"
 #include "defines.h"
 #include "utils.h"

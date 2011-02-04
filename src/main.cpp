@@ -27,7 +27,6 @@
 //////////////////////////////////////////////////////////////////////////
 
 
-#include <QApplication>
 #include "mainwidget.h"
 #include "logger.h"
 #include "config.h"

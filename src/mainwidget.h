@@ -29,10 +29,6 @@
 #ifndef _MAINWIDGET_H_
 #define _MAINWIDGET_H_
 
-#include <QWidget>
-#include <QHttp>
-#include <QNetworkCookie>
-#include <QSystemTrayIcon>
 #include "ui_mainwidget.h"
 #include "types.h"
 

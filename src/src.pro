@@ -7,6 +7,11 @@ TEMPLATE = app
 
 CONFIG += debug warn_on
 
+win32{
+PRECOMPILED_HEADER = stable.h
+CONFIG += precompile_header
+}
+
 SOURCES += main.cpp \
     mainwidget.cpp \
     utils.cpp \
@@ -18,7 +23,8 @@ HEADERS += \
     types.h \
     config.h \
     utils.h \
-    logger.h
+    logger.h \
+    stable.h
 
 FORMS += \
     mainwidget.ui
@@ -44,3 +50,22 @@ win32:
     RC_FILE = smser.rc 
     QMAKE_LFLAGS *= -static-libgcc
 }
+
+#symbian
+#{
+
+#    RSS_RULES ="group_name=\"SMSER\";"
+
+#   vendorinfo = \
+#   "; Igor Sobinov" \
+#    "%{\"Igor Sobinov\"}" \
+#    " " \
+#    "; Igor Sobinov" \
+#    ":\"Igor Sobinov\"" \
+#    " "
+
+#    examples_deployment.pkg_prerules += vendorinfo
+#    DEPLOYMENT += examples_deployment
+
+#    ICON = img/heardt2.png
+#}
